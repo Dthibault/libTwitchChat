@@ -2,7 +2,7 @@
   * @file libTwitchChat.h
   * @brief C++/Qt Library for Twitch Chat
   * @author Thibault "Palamecia" Dupuis
-  * @version 0.1
+  * @version 0.2
   * @date 05/04/2016
   *
   * C++/Qt Library for Twitch Chat. This library is for bot use.
@@ -19,7 +19,7 @@
 #include <QTimer>
 #include <QDebug>
 
-#define LIBTWITCHCHAT_VERSION "0.1"
+#define LIBTWITCHCHAT_VERSION "0.2"
 #define LIBTWITCHCHAT_SERVER "irc.chat.twitch.tv"
 #define LIBTWITCHCHAT_PORT "6667"
 
@@ -142,6 +142,11 @@ signals:
      * @brief Signal emitted when the connection to Twitch chat server is ok
      */
     void connected();
+
+    /**
+     * @brief Signal emitted when data are received from Twitch chat server;
+     */
+    void received(QString);
 
 private slots:
 

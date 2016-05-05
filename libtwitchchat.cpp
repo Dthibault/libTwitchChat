@@ -2,7 +2,7 @@
   * @file libtwitchchat.cpp
   * @brief C++/Qt Library for Twitch Chat
   * @author Thibault "Palamecia" Dupuis
-  * @version 0.1
+  * @version 0.2
   * @date 05/04/2016
   *
   * C++/Qt Library for Twitch Chat. This library is for bot use.
@@ -299,6 +299,10 @@ void LibTwitchChat::sockRead()
                 }
             }
         }
+
+
+        // Emit the data who are received
+        emit received(ansArray[i]);
     }
 }
 
