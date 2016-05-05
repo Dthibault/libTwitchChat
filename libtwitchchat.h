@@ -2,7 +2,7 @@
   * @file libTwitchChat.h
   * @brief C++/Qt Library for Twitch Chat
   * @author Thibault "Palamecia" Dupuis
-  * @version 0.0.1
+  * @version 0.1
   * @date 05/04/2016
   *
   * C++/Qt Library for Twitch Chat. This library is for bot use.
@@ -19,7 +19,7 @@
 #include <QTimer>
 #include <QDebug>
 
-#define LIBTWITCHCHAT_VERSION "0.0.1"
+#define LIBTWITCHCHAT_VERSION "0.1"
 #define LIBTWITCHCHAT_SERVER "irc.chat.twitch.tv"
 #define LIBTWITCHCHAT_PORT "6667"
 
@@ -96,6 +96,12 @@ public:
      * @return True if the bot is connected to Twitch chat server, False if not
      */
     bool isConnected();
+
+    /**
+     * @brief Send data string to Twitch chat server
+     * @param data String who are send to Twitch chat server, \r\n is added at the end
+     */
+    void send(QString data);
 
     /**
      * @brief The ErrorType enum

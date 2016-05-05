@@ -2,7 +2,7 @@
   * @file libtwitchchat.cpp
   * @brief C++/Qt Library for Twitch Chat
   * @author Thibault "Palamecia" Dupuis
-  * @version 0.0.1
+  * @version 0.1
   * @date 05/04/2016
   *
   * C++/Qt Library for Twitch Chat. This library is for bot use.
@@ -299,9 +299,7 @@ void LibTwitchChat::sockRead()
                 }
             }
         }
-
     }
-
 }
 
 
@@ -445,4 +443,16 @@ bool LibTwitchChat::isConnected()
 {
     // Return the state of the connection
     return this->connectedState;
+}
+
+
+// Send data string to Twitch chat server
+void LibTwitchChat::send(QString data)
+{
+    // Copy the data and add '\r\n' to the end
+    QString copy = data;
+    copy.append("\r\n");
+
+    // Send the data to Twitch chat server
+    this->sock->write(copy.toUtf8(), copy.size());
 }
