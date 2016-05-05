@@ -16,6 +16,7 @@
 #include <QString>
 #include <QTcpSocket>
 #include <QIODevice>
+#include <QTimer>
 #include <QDebug>
 
 #define LIBTWITCHCHAT_VERSION "0.0.1"
@@ -79,28 +80,62 @@ public:
      */
     QString getBotToken();
 
-    /**
-     * @brief Get the last error who occured
-     * @return The last error
-     */
-    QString lastError();
 
     /**
      * @brief Connect the bot to the Twitch chat server
-     * @return True if the connection is successfull, False if there is a problem
      */
-    bool connect();
+    void connect();
+
+    /**
+     * @brief Disconnect the bot from the Twitch chat server
+     */
+    void disconnect();
+
+    /**
+     * @brief Check if the bot is connected to Twitch chat server
+     * @return True if the bot is connected to Twitch chat server, False if not
+     */
+    bool isConnected();
+
+    /**
+     * @brief The ErrorType enum
+     */
+    enum ErrorType
+    {
+        ERRBOTNAME,
+        ERRBOTTOKEN,
+        ERRALREADYCONNECTED,
+        ERRSERVERCLOSED,
+        ERRSERVERNOTFOUND,
+        ERRSERVERREFUSED,
+        ERRSERVERTIMEOUT,
+        ERRLOGIN,
+        ERRNOTCONNECTED,
+        ERRSOCKUNKNOW
+    };
 
 private:
 
     bool debugState; /*!< Status of the debug mode */
-    QString errorString; /*!< String of the last error */
+
+    bool connectedState; /*!< Status of the connection */
 
     QString botName; /*!< Bot name */
     QString botToken; /*!< Bot token */
 
     QTcpSocket *sock; /*!< TCP Socket for the library */
+
 signals:
+
+    /**
+     * @brief Signal emitted when there is an error
+     */
+    void error(LibTwitchChat::ErrorType);
+
+    /**
+     * @brief Signal emitted when the connection to Twitch chat server is ok
+     */
+    void connected();
 
 private slots:
 
@@ -120,6 +155,20 @@ private slots:
      */
     void sockConnected();
 
+    /**
+     * @brief Send the membership capabilities to the Twitch chat server
+     */
+    void sendCapabilitiesMembership();
+
+    /**
+     * @brief Send the commands capabilities to the Twitch chat server
+     */
+    void sendCapabilitiesCommands();
+
+    /**
+     * @brief Send the tags capabilities to the Twitch chat server
+     */
+    void sendCapabilitiesTags();
 };
 
 #endif // LibTwitchChat_H
