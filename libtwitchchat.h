@@ -1,5 +1,5 @@
 /**
-  * @file libtwitchchat.h
+  * @file libTwitchChat.h
   * @brief C++/Qt Library for Twitch Chat
   * @author Thibault "Palamecia" Dupuis
   * @version 0.0.1
@@ -14,36 +14,40 @@
 
 #include <QObject>
 #include <QString>
+#include <QTcpSocket>
+#include <QIODevice>
 #include <QDebug>
 
 #define LIBTWITCHCHAT_VERSION "0.0.1"
+#define LIBTWITCHCHAT_SERVER "irc.chat.twitch.tv"
+#define LIBTWITCHCHAT_PORT "6667"
 
 /**
- * @class libTwitchChat
- * @brief The libTwitchChat class
+ * @class LibTwitchChat
+ * @brief The LibTwitchChat class
  *
  * This class is used for the whole library
  */
-class libTwitchChat : public QObject
+class LibTwitchChat : public QObject
 {
     Q_OBJECT
 public:
     /**
      * @brief Constructor
      *
-     * Constructor for the libTwitchChat class
+     * Constructor for the LibTwitchChat class
      *
      * @param parent
      */
-    explicit libTwitchChat(QObject *parent = 0);
+    explicit LibTwitchChat(QObject *parent = 0);
 
     /**
      * @brief Destructor
      *
-     * Destructor for the libTwitchChat class
+     * Destructor for the LibTwitchChat class
      *
      */
-    virtual ~libTwitchChat();
+    virtual ~LibTwitchChat();
 
     /**
      * @brief Enable/Disable the debug mode
@@ -75,15 +79,47 @@ public:
      */
     QString getBotToken();
 
+    /**
+     * @brief Get the last error who occured
+     * @return The last error
+     */
+    QString lastError();
+
+    /**
+     * @brief Connect the bot to the Twitch chat server
+     * @return True if the connection is successfull, False if there is a problem
+     */
+    bool connect();
+
 private:
 
     bool debugState; /*!< Status of the debug mode */
+    QString errorString; /*!< String of the last error */
 
     QString botName; /*!< Bot name */
     QString botToken; /*!< Bot token */
+
+    QTcpSocket *sock; /*!< TCP Socket for the library */
 signals:
 
-public slots:
+private slots:
+
+    /**
+     * @brief Slot for reading socket data
+     */
+    void sockRead();
+
+    /**
+     * @brief Slot for reading socket error
+     * @param err Error from the socket
+     */
+    void sockError(QAbstractSocket::SocketError err);
+
+    /**
+     * @brief Slot when socket is connected to Twitch chat server
+     */
+    void sockConnected();
+
 };
 
-#endif // LIBTWITCHCHAT_H
+#endif // LibTwitchChat_H
