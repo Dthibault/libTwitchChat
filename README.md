@@ -42,4 +42,4 @@ This application is released under the GPLv3 licence.
 
 ### Contact ###
 
-If you have any questions, you can send me a message on Twitch (itsPalamecia) or by Bitbucket message
+If you have any questions, you can send me a message on Twitch (itsPalamecia) or by Github message
